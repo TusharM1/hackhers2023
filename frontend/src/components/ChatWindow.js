@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import socketIO from "socket.io-client";
-import { Input, MessageList } from "react-chat-elements";
-import 'react-chat-elements/dist/main.css';
-import { Button } from "react-bootstrap";
+import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {
+	MainContainer,
+	ChatContainer,
+	MessageList,
+	Message,
+	MessageInput,
+} from "@chatscope/chat-ui-kit-react";
 
 export default function ChatWindow() {
 	const [socket, setSocket] = useState(null);
@@ -18,71 +23,33 @@ export default function ChatWindow() {
 		});
 	}, [setSocket]);
 
-	const [messageListArray, setMessageListArray] = useState([])
-	const messageListReferance = React.createRef();
-	const inputReferance = React.useRef()
-
-	let clearRef = () => {console.log("Clear")}
-	function useForceUpdate() {
-		const [value, setValue] = useState(0)
-		return () => setValue(() => value + 1)
-	}
-	const forceUpdate = useForceUpdate()
+	const [messages, setMessages] = useState([]);
 
 	const addMessage = (message) => {
-		setMessageListArray([...messageListArray, {
-			position:"right",
-			type:"text",
-			title:"Emre",
-			text:message,
-		}])
-		console.log(message)
-		clearRef()
-		forceUpdate()
+		setMessages([...messages,
+			<Message key={messages.length}
+					 model={{
+						 message: message,
+						 sentTime: "just now",
+						 sender: "Joe",
+					 }}
+			/>]
+		)
+		console.log(messages)
 	}
-
-	const [chatInfo, setChatInfo] = useState({
-		"name": "Kursat",
-		"avatar" : "https://avatars.githubusercontent.com/u/80540635?v=4",
-		"subtitle" : "Why don't we go to the mall this weekend ?"
-	})
-
-	const [, updateState] = React.useState();
 
 	return (
 		<div className={"width-container content-container"}>
-			{/*<MessageList*/}
-			{/*	className='message-list'*/}
-			{/*	lockable={true}*/}
-			{/*	toBottomHeight={'100%'}*/}
-			{/*	referance={messageListReferance}*/}
-			{/*	 dataSource={messageListArray}/>*/}
-			{/*<Input*/}
-			{/*	className='rce-example-input'*/}
-			{/*	placeholder='Write your message here.'*/}
-			{/*	defaultValue=''*/}
-			{/*	referance={inputReferance}*/}
-			{/*	clear={(clear) => (clearRef = clear)}*/}
-			{/*	maxHeight={50}*/}
-			{/*	// onKeyPress={(e) => {*/}
-			{/*	// 	if (e.shiftKey && e.charCode === 13) {*/}
-			{/*	// 		return true*/}
-			{/*	// 	}*/}
-			{/*	// 	if (e.key === ) {*/}
-			{/*	// 		clearRef()*/}
-			{/*	// 		addMessage(e.target.value)*/}
-			{/*	// 	}*/}
-			{/*	// }}*/}
-			{/*	rightButtons={<Button text='Submit' onClick={(event) => addMessage(event.target.valueOf())}>Send</Button>}*/}
-			{/*/>*/}
-
-			<MessageList chatInfo={chatInfo}
-						 chatType={"text"}
-						 updateState={updateState}
-						 dataSource={messageListArray}
-						 lockable={true}
-						 toBottomHeight={'100%'}
-						 referance={messageListReferance}/>
+			<div style={{ position: "relative", height: "500px" }}>
+				<MainContainer>
+					<ChatContainer>
+						<MessageList>
+							{messages}
+						</MessageList>
+						<MessageInput placeholder="Type message here" onSend={addMessage}/>
+					</ChatContainer>
+				</MainContainer>
+			</div>;
 		</div>
 	)
 }
