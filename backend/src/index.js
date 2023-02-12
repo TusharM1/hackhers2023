@@ -8,19 +8,23 @@ const io = new Server(httpServer, {
 	}
 });
 
-let users = {}
-let connections = {}
+// let users = {}
+// let connections = {}
+
+
+let connected_users = [];
+let waiting_users = [];
 
 
 const PORT = 3001;
 io.on('connection', (socket) => {
-	console.log(${socket.id} "connected");
+	console.log(socket.id + " connected");
 
 	socket.on("message", data => {
-		users[data.socketID] = data.message;
-		io.emit("messageResponse", "Received data from " + data.socketID)
+		// waiting_users[data.socketID] = data.interests;
+		waiting_users.push(data);
+
 		console.log("Users: " + JSON.stringify(users))
-		console.log("Message Received: " + JSON.stringify(data))
 		if (Object.keys(users).length > 1){
 			let u1 = {
 				connection: Object.keys(users)[1],
@@ -140,7 +144,7 @@ function processInfo(list1, list2){
 		(async () => {
 			const response = await openai.createCompletion({
 				model: "text-davinci-003",
-				prompt: "Create a single simple icebreaker question for two people given their interests.",
+				prompt: "Create a single simple icebreaker question for two people.",
 				max_tokens: 100,
 				temperature: 0.3,
 			});
