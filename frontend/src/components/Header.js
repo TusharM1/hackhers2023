@@ -1,5 +1,9 @@
+import "../styles/Header.css"
+
 export default function Header() {
 	return (
-		<span>Header</span>
+		<header>
+			<h1 className={"width-container"}>AIceBreaker</h1>
+		</header>
 	)
 }

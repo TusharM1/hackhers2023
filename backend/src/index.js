@@ -12,7 +12,7 @@ let users = {}
 
 const PORT = 3001;
 io.on('connection', (socket) => {
-	console.log(`${socket.id} user just connected!`)
+	console.log(${socket.id} "connected");
 
 	socket.on("message", data => {
 		users[data.socketID] = data.message;
