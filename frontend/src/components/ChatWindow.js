@@ -9,9 +9,11 @@ import {
 	MessageInput,
 } from "@chatscope/chat-ui-kit-react";
 import { InterestsContext } from "../contexts/InterestsContext";
+import { Alert } from "react-bootstrap";
 
 export default function ChatWindow() {
 	const [socket, setSocket] = useState(null);
+	const [question, setQuestion] = useState("Question: ");
 	const { interests } = useContext(InterestsContext);
 	useEffect(() => {
 		const socket = socketIO.io('http://localhost:3001');
@@ -21,6 +23,10 @@ export default function ChatWindow() {
 				socketID: socket.id,
 				interests: interests
 			});
+			socket.on("question", data => {
+				console.log(data)
+				setQuestion(data);
+			})
 			socket.on("messageResponse", data => {
 				addMessage(data, 0)
 			})
@@ -43,6 +49,7 @@ export default function ChatWindow() {
 
 	return (
 		<div className={"width-container content-container"}>
+			<Alert id={"question"}>Question: {question}</Alert>
 			<div style={{ position: "relative", height: "500px" }}>
 				<MainContainer>
 					<ChatContainer>
@@ -53,7 +60,7 @@ export default function ChatWindow() {
 									  onSend={(message) => addMessage(message, 1)}/>
 					</ChatContainer>
 				</MainContainer>
-			</div>;
+			</div>
 		</div>
 	)
 }
