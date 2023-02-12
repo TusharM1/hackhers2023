@@ -1,7 +1,7 @@
 import socketIO from "socket.io-client";
 
 export default function ChatWindow() {
-	const socket = socketIO.io('http://172.31.50.252:3001');
+	const socket = socketIO.io('http://localhost:3001');
 	socket.on('connect' , () => {
 		console.log(socket.id)
 		socket.emit('message', {

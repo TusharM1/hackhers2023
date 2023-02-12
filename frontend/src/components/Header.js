@@ -1,5 +1,13 @@
+import React from 'react';
+
+
+
 export default function Header() {
 	return (
-		<span>Header</span>
+		<div className="header">
+			<div className="inner_header">
+
+			</div>
+		</div>
 	)
 }
