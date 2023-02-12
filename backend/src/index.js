@@ -12,7 +12,7 @@ const io = new Server(httpServer, {
 // let users = {}
 
 const configuration = new Configuration({
-	apiKey: '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',
+	apiKey: '<<API KEY>>',
 });
 const openai = new OpenAIApi(configuration);
 
