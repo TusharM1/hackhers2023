@@ -13,26 +13,8 @@ import { Alert } from "react-bootstrap";
 
 export default function ChatWindow() {
 	const [socket, setSocket] = useState(null);
-	const [question, setQuestion] = useState("Question: ");
+	const [question, setQuestion] = useState("");
 	const { interests } = useContext(InterestsContext);
-	useEffect(() => {
-		const socket = socketIO.io('http://localhost:3001');
-		socket.on('connect' , () => {
-			console.log(socket.id + " " + interests)
-			socket.emit('message', {
-				socketID: socket.id,
-				interests: interests
-			});
-			socket.on("question", data => {
-				console.log(data)
-				setQuestion(data);
-			})
-			socket.on("messageResponse", data => {
-				addMessage(data, 0)
-			})
-		});
-	}, [setSocket]);
-
 	const [messages, setMessages] = useState([]);
 
 	const addMessage = (message, direction) => {
@@ -45,7 +27,29 @@ export default function ChatWindow() {
 					 }}
 			/>]
 		)
+		console.log(messages)
+		if (direction === 1) {
+			socket.emit("message", message);
+		}
 	}
+
+	useEffect(() => {
+		const socket = socketIO.io('http://172.31.151.8:3001');
+		socket.on('connect' , () => {
+			console.log(socket.id + " " + interests)
+			socket.emit('interests', {
+				interests: interests
+			});
+			socket.on("question", data => {
+				console.log(data)
+				setQuestion(data);
+			})
+			socket.on("messageResponse", data => {
+				addMessage(data, 0)
+			})
+		});
+		setSocket(socket)
+	}, [setSocket]);
 
 	return (
 		<div className={"width-container content-container"}>
