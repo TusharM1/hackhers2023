@@ -9,6 +9,7 @@
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.1",
+    "react-chat-elements": "^12.0.7",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "react-tagsinput": "^3.20.0",

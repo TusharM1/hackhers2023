@@ -11,7 +11,7 @@ export default function TopicSelector({ switchToChat }) {
 	}
 
 	return (
-		<div id={"selector-container"} className={"width-container"}>
+		<div className={"width-container content-container"}>
 			<div id={"topic-selector"}>
 				<TagsInput value={state.tags}
 						   onChange={handleChange}

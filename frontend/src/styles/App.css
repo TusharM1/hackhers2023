@@ -9,3 +9,9 @@
 	margin: 0 auto;
 	width: 80%;
 }
+
+.content-container {
+	height: 50%;
+	width: 70%;
+	margin: auto auto;
+}

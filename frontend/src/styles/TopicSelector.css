@@ -4,12 +4,6 @@
 	align-items: center;
 }
 
-#topic-selector {
-	height: 50%;
-	width: 70%;
-	margin: auto auto;
-}
-
 #startButton {
 	margin: 10px auto;
 	display: block;
